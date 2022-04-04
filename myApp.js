@@ -12,8 +12,8 @@ app.use(helmet.noSniff());
 app.use(helmet.ieNoOpen());
 ninetyDays = 90*24*60*60;
 app.use(helmet.hsts({maxAge: ninetyDays, force: true}));
-app.use(dnsPrefetchControl()); // Not in the default app.use(helmet()), reduces performance
-
+app.use(helmet.dnsPrefetchControl()); // Not in the default app.use(helmet()), reduces performance
+app.use(helmet.noCache()); // Not default, reduces performance
 
 
 
