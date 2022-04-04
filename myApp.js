@@ -6,15 +6,22 @@ const helmet = require("helmet");
 // most of the following are methods that would be included by just using the 
 // above statement.
 app.use(helmet.hidePoweredBy());
-app.use(helmet.frameguard( { action: 'deny' }));
+app.use(helmet.frameguard({ action: 'deny' }));
 app.use(helmet.xssFilter());
 app.use(helmet.noSniff());
 app.use(helmet.ieNoOpen());
-ninetyDays = 90*24*60*60;
-app.use(helmet.hsts({maxAge: ninetyDays, force: true}));
+ninetyDays = 90 * 24 * 60 * 60;
+app.use(helmet.hsts({ maxAge: ninetyDays, force: true }));
 app.use(helmet.dnsPrefetchControl()); // Not in the default app.use(helmet()), reduces performance
 app.use(helmet.noCache()); // Not default, reduces performance
-
+app.use(helmet.contentSecurityPolicy(
+  {
+    directives: {
+      defaultSrc: ["'self", "trusted-cdn.com"],
+      scriptSrc: ["'self", "trusted-cdn.com"]
+    }
+  }
+))
 
 
 
