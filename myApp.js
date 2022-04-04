@@ -1,7 +1,10 @@
 const express = require('express');
+const { dnsPrefetchControl } = require('helmet');
 const app = express();
 const helmet = require("helmet");
 // app.use(helmet());
+// most of the following are methods that would be included by just using the 
+// above statement.
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard( { action: 'deny' }));
 app.use(helmet.xssFilter());
@@ -9,7 +12,7 @@ app.use(helmet.noSniff());
 app.use(helmet.ieNoOpen());
 ninetyDays = 90*24*60*60;
 app.use(helmet.hsts({maxAge: ninetyDays, force: true}));
-
+app.use(dnsPrefetchControl()); // Not in the default app.use(helmet()), reduces performance
 
 
 
